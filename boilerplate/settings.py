@@ -34,7 +34,8 @@ INSTALLED_APPS = []
 
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
-    'boilerplate.middlewares.request_validation.RequestValidationMiddleware'
+    'boilerplate.middlewares.request_validation.RequestValidationMiddleware',
+    'boilerplate.middlewares.handle_exception.HandleExceptionMiddleware'
 ]
 
 ROOT_URLCONF = 'boilerplate.urls'

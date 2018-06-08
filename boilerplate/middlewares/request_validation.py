@@ -2,9 +2,9 @@ import json
 import re
 from datetime import datetime
 
-from bson.objectid import ObjectId
 from jsonschema import Draft4Validator
 
+from bson.objectid import ObjectId
 from commons.utils.http_error import BadRequest
 from django.urls import resolve
 

@@ -1,4 +1,3 @@
-# from .response import JSONResponse
 from django.http import JsonResponse
 
 
@@ -23,7 +22,7 @@ class HttpError(Exception):
             response['error']['errors'] = errors
 
         setattr(self, 'errors', errors)
-        setattr(self, 'response', JSONResponse(response, status=status_code))
+        setattr(self, 'response', JsonResponse(response, status=status_code))
 
         super(HttpError, self).__init__(self, message)
 
