@@ -14,8 +14,11 @@ import os
 
 from boilerplate import PROJECT_BASE_DIR
 
+from pymodm import connect
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = PROJECT_BASE_DIR
+DEBUG = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -31,6 +34,7 @@ INSTALLED_APPS = []
 
 MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
+    'boilerplate.middlewares.request_validation.RequestValidationMiddleware'
 ]
 
 ROOT_URLCONF = 'boilerplate.urls'
@@ -43,13 +47,28 @@ WSGI_APPLICATION = 'boilerplate.wsgi.application'
 
 DATABASE_SETTINGS = {
     'mongodb': {
-        'NAME': os.environ.get('MONGO_DB_NAME', 'core'),
+        'NAME': os.environ.get('MONGO_DB_NAME', 'boilerplate'),
         'USER': os.environ.get('MONGO_DB_USER'),
         'PASS': os.environ.get('MONGO_DB_PASSWORD'),
         'HOST': os.environ.get('MONGO_DB_HOST', 'localhost'),
         'PORT': os.environ.get('MONGO_DB_PORT', '27017'),
     }
 }
+
+mongo_credentials = DATABASE_SETTINGS['mongodb']
+
+connect(
+    'mongodb://{userpass}{mongo_host}:{mongo_port}/{db}'.format(
+        mongo_host=mongo_credentials.get('HOST'),
+        mongo_port=str(mongo_credentials.get('PORT')),
+        db=mongo_credentials.get('NAME'),
+        userpass='{username}{password}{at}'.format(
+            username=mongo_credentials.get('USER') or '',
+            password=':' + mongo_credentials['PASS'] if mongo_credentials.get('PASS') else '',
+            at='@' if mongo_credentials.get('USER') else ''
+        )
+    )
+)
 
 
 # Password validation
