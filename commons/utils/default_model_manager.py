@@ -173,7 +173,7 @@ class DefaultManager(Manager):
             query_list = []
             query_list.append(id_doc)
             if '$and' not in list(query):
-                for key, value in query.iteritems():
+                for key, value in iter(query.items()):
                     key_value_dict = {key: value}
                     query_list.append(key_value_dict)
 
