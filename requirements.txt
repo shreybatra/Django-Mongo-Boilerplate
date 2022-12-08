@@ -1,5 +1,5 @@
 bson==0.5.6
-certifi==2018.4.16
+certifi==2022.12.7
 chardet==3.0.4
 Django==2.0.5
 idna==2.6
